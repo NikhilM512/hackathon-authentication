@@ -2,6 +2,7 @@
  const express=require("express");
  const jwt = require("jsonwebtoken")
  const bcrypt = require('bcrypt');
+ const cors = require("cors");
  const { connection } = require("./Config/db");
  const {UserModel}=require("./Models/User.model")
 
