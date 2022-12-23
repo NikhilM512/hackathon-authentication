@@ -44,6 +44,18 @@
    
 })
 
+app.post("/login/:token",(req,res)=>{
+    const token=req.params.token;
+    console.log(token)
+    const decodedToken = jwt.verify(token, process.env.SECRET_KEY)
+    console.log(decodedToken)
+    if(decodedToken){
+        res.send(decodedToken)
+    }
+
+})
+
+
 app.post("/login", async (req, res) => {
    const {email, password} = req.body;
    try{
@@ -53,7 +65,7 @@ app.post("/login", async (req, res) => {
        const hashed_password = user[0].password;
        bcrypt.compare(password, hashed_password, function(err, result) {
            if(result){
-               const token = jwt.sign({"userID":user[0]._id},  process.env.SECRET_KEY);
+               const token = jwt.sign({"userID":user[0]._id,"Name":user[0].name},  process.env.SECRET_KEY);
                res.send({"msg":"Login successfull","token" : token})
            }
            else{
